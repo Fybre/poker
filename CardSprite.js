@@ -16,8 +16,8 @@ class CardSprite {
       this.shadowImageLoaded = true;
     };
 
-    this.cardImage.src = "../img/cards.png";
-    this.shadowImage.src = "../img/cardshadow.png";
+    this.cardImage.src = "./img/cards.png";
+    this.shadowImage.src = "./img/cardshadow.png";
   }
 
   getCardWidth() {
