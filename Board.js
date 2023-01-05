@@ -2,12 +2,13 @@ class Board {
   constructor(config) {
     this.canvas = config.canvas;
     this.ctx = config.canvas.getContext("2d");
+  }
+
+  // Initialise the deck for a new game
+  init() {
     this.players = [];
     this.deck = new Deck({ board: this });
     this.gamestatus = Types.gameStatuses.Wait;
-  }
-
-  init() {
     this.startGameLoop();
   }
 
@@ -65,6 +66,7 @@ class Board {
   onClick(e) {
     switch (e.action) {
       case "start":
+        this.init();
         this.addPlayers(e.noPlayers - 0);
         break;
       case "deal":
@@ -77,9 +79,6 @@ class Board {
     new Audio(url).play();
   }
 
-  play() {}
-
-  update() {}
 
   // routine to draw the board and elements on it
   draw() {
