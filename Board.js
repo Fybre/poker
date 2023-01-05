@@ -50,7 +50,6 @@ class Board {
 
   // add players to the board - parameter is no of players to add. also adds the human player
   addPlayers(noPlayers) {
-    // clear players first
     let pArray = [
       Types.playerTypes.Player,
       Types.playerTypes.AI1,
