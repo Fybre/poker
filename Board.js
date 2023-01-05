@@ -7,6 +7,10 @@ class Board {
   // Initialise the deck for a new game
   init() {
     this.players = [];
+    this.communityHand = new Player({
+      playerType: Types.playerTypes.Community,
+      board: this,
+    });
     this.deck = new Deck({ board: this });
     this.gamestatus = Types.gameStatuses.Wait;
     this.startGameLoop();
@@ -38,11 +42,12 @@ class Board {
 
   deal(dealType) {
     // deal cards to all players
-    console.log(dealType);
     switch (dealType) {
-      case Types.dealTypes.Flop:
+      case Types.dealTypes.Hole:
         this.players.forEach((player) => {
-          [1, 2].forEach(() => { player.addCard(this.deck.deal()); })
+          [1, 2].forEach(() => {
+            player.addCard(this.deck.deal());
+          });
           if (player.playerType === Types.playerTypes.Player) {
             player.hand.forEach((card) => {
               card.isFaceDown = false;
@@ -50,12 +55,17 @@ class Board {
           }
         });
         break;
-      case Types.dealTypes.Hole:
-        this.player.forEach((player) => {
-          if (player.playerType === Types.playerTypes.Community) {
-            [1, 2, 3].forEach(() => player.addCard(this.deck.deal));
-          }
-        });
+      case Types.dealTypes.Flop:
+        [1, 2, 3].forEach(() =>
+          this.communityHand.addCard(this.deck.deal(), false)
+        );
+        break;
+      case Types.dealTypes.Turn:
+        console.log("turn");
+        this.communityHand.addCard(this.deck.deal(), false);
+        break;
+      case Types.dealTypes.River:
+        this.communityHand.addCard(this.deck.deal(), false);
         break;
     }
   }
@@ -75,13 +85,23 @@ class Board {
   }
 
   onClick(e) {
+    console.log(e);
     switch (e.action) {
       case "start":
         this.init();
         this.addPlayers(e.noPlayers - 0); // - 0 coerces to number
         break;
-      case "deal":
+      case Types.dealTypes.Hole:
+        this.deal(Types.dealTypes.Hole);
+        break;
+      case Types.dealTypes.Flop:
         this.deal(Types.dealTypes.Flop);
+        break;
+      case Types.dealTypes.Turn:
+        this.deal(Types.dealTypes.Turn);
+        break;
+      case Types.dealTypes.River:
+        this.deal(Types.dealTypes.River);
         break;
     }
   }
@@ -89,7 +109,6 @@ class Board {
   playSoundAsync(url) {
     new Audio(url).play();
   }
-
 
   // routine to draw the board and elements on it
   draw() {
@@ -102,5 +121,7 @@ class Board {
     this.players.forEach((player) => {
       player.draw(ctx);
     });
+    //draw community hand
+    this.communityHand.draw(ctx);
   }
 }

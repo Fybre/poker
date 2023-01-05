@@ -14,11 +14,12 @@ class Player {
     this.playerType.name = name;
   }
 
-  addCard(card) {
+  addCard(card, faceDown = true) {
     card.dealTo(
       Types.playerTypes.Deck.positions[0],
       this.handLocations[this.hand.length]
     );
+    card.isFaceDown = faceDown; 
     this.hand.push(card);
   }
 
@@ -28,7 +29,7 @@ class Player {
     ctx.font = "40px Arial";
     ctx.textBaseline = "bottom";
     ctx.fillText(
-      this.playerType.name + " - $" + this.playerMoney,
+      this.playerType.name + (this.playerType === Types.playerTypes.Community? "":" - $" + this.playerMoney),
       this.playerType.textPosition.x,
       this.playerType.textPosition.y
     );

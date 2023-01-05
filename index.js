@@ -21,9 +21,18 @@ function buttonClick(e) {
         }
       }
       break;
-    case "deal":
-      console.log("Deal clicked. Forwarding to board");
-      board.onClick({ action: "deal" });
+    case "hole":
+      board.onClick({ action: Types.dealTypes.Hole });
+      break;
+    case "flop":
+      board.onClick({ action: Types.dealTypes.Flop });
+      break;
+    case "turn":
+      console.log("turn in index");
+      board.onClick({ action: Types.dealTypes.Turn });
+      break;
+    case "river":
+      board.onClick({ action: Types.dealTypes.River });
       break;
   }
 }

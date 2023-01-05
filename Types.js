@@ -4,7 +4,7 @@ class Types {
   //game status
   static gameStatuses = { Wait: 0, Deal: 1 };
 
-  static dealTypes = {Hole:1, Flop:2, Turn: 3, River:4}
+  static dealTypes = {Hole:"hole", Flop:"flop", Turn: "turn", River:"river"};
 
   // canvas size details used for setting up locations for players
   static canvasSize = { width: 3150, height: 1575, spacer: 20 };
