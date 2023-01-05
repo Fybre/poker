@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poker</title>
+    <base href="/" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <div id="gameContainer">
+      <canvas id="gameCanvas"></canvas>
+      <div id="gameControls">
+        <button onclick="buttonClick('start')" id="buttonStart">Start</button>
+        <button onclick="buttonClick('deal')" id="buttonDeal">Deal</button>
+      </div>
+    </div>
+
+    <script src="./Types.js"></script>
+    <script src="./Card.js"></script>
+    <script src="./CardSprite.js"></script>
+    <script src="./Player.js"></script>
+    <script src="./Deck.js"></script>
+    <script src="./Board.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  justify-content: center;
+  height: 100vh;
+  background: rgb(116, 116, 116);
+}
+
+#gameContainer {
+  position: relative;
+  top: 0;
+  left: 0;
+
+  max-width: 100%;
+  max-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+#gameCanvas {
+  border: 10px solid rgb(4, 85, 4);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: green;
+  max-width: 96%;
+  max-height: 96%;
+  box-shadow: 10px 10px 20px black;
+}
+
+#gameControls {
+  /* border: 5px solid black; */
+  float: right;
+  background: darkgreen;
+  box-shadow: 10px 10px 20px black;
+  padding: 10px;
+}
+
+/* 
+#gameCanvas {
+  border: 10px solid rgb(4, 85, 4);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: green;
+  max-width: 96%;
+  max-height: 96%;
+  box-shadow: 10px 10px 20px black;
+} */
