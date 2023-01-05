@@ -36,17 +36,28 @@ class Board {
     gameLoop();
   }
 
-  deal() {
+  deal(dealType) {
     // deal cards to all players
-    this.players.forEach((player) => {
-      player.addCard(this.deck.deal());
-      player.addCard(this.deck.deal());
-      if (player.playerType === Types.playerTypes.Player) {
-        player.hand.forEach((card) => {
-          card.isFaceDown = false;
+    console.log(dealType);
+    switch (dealType) {
+      case Types.dealTypes.Flop:
+        this.players.forEach((player) => {
+          [1, 2].forEach(() => { player.addCard(this.deck.deal()); })
+          if (player.playerType === Types.playerTypes.Player) {
+            player.hand.forEach((card) => {
+              card.isFaceDown = false;
+            });
+          }
         });
-      }
-    });
+        break;
+      case Types.dealTypes.Hole:
+        this.player.forEach((player) => {
+          if (player.playerType === Types.playerTypes.Community) {
+            [1, 2, 3].forEach(() => player.addCard(this.deck.deal));
+          }
+        });
+        break;
+    }
   }
 
   // add players to the board - parameter is no of players to add. also adds the human player
@@ -67,10 +78,10 @@ class Board {
     switch (e.action) {
       case "start":
         this.init();
-        this.addPlayers(e.noPlayers - 0);
+        this.addPlayers(e.noPlayers - 0); // - 0 coerces to number
         break;
       case "deal":
-        this.deal();
+        this.deal(Types.dealTypes.Flop);
         break;
     }
   }
@@ -85,10 +96,9 @@ class Board {
     // clear board
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //draw deck image
+    //draw card deck image
     this.deck.draw(ctx);
     // draw cards
-
     this.players.forEach((player) => {
       player.draw(ctx);
     });
