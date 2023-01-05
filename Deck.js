@@ -38,7 +38,7 @@ class Deck {
 
   deal() {
     var result = this.deck.pop();
-    this.board.playSoundAsync("../snd/dealcard.wav");
+    this.board.playSoundAsync("./snd/dealcard.wav");
     return result;
   }
 
