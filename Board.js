@@ -84,7 +84,7 @@ class Board {
     }
   }
 
-  onClick(e) {
+  onButtonClick(e) {
     console.log(e);
     switch (e.action) {
       case "start":

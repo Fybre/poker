@@ -15,24 +15,24 @@ function buttonClick(e) {
       let noPlayers = window.prompt("Enter No of Computer Players (1-3)");
       if (noPlayers != null) {
         if (noPlayers > 0 && noPlayers < 4) {
-          board.onClick({ action: "start", noPlayers: noPlayers });
+          board.onButtonClick({ action: "start", noPlayers: noPlayers });
         } else {
           window.alert("Please enter between 1-3 computer players");
         }
       }
       break;
     case "hole":
-      board.onClick({ action: Types.dealTypes.Hole });
+      board.onButtonClick({ action: Types.dealTypes.Hole });
       break;
     case "flop":
-      board.onClick({ action: Types.dealTypes.Flop });
+      board.onButtonClick({ action: Types.dealTypes.Flop });
       break;
     case "turn":
       console.log("turn in index");
-      board.onClick({ action: Types.dealTypes.Turn });
+      board.onButtonClick({ action: Types.dealTypes.Turn });
       break;
     case "river":
-      board.onClick({ action: Types.dealTypes.River });
+      board.onButtonClick({ action: Types.dealTypes.River });
       break;
   }
 }
