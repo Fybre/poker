@@ -17,7 +17,6 @@ function getCombinations(hand, handSize, current = [], result = []) {
     result.push(current);
     return;
   }
-
   for (let i = 0; i < hand.length; i++) {
     getCombinations(
       hand.slice(i + 1),
@@ -27,6 +26,13 @@ function getCombinations(hand, handSize, current = [], result = []) {
     );
   }
   return result;
+}
+
+function isRoyalFlush(sortedHand) {
+  if (isAllSameSuite(sortedHand) && sortedHand[0].getCardValue() == 10) {
+    return true;
+  }
+  return false;
 }
 
 function isAllSameSuite(hand) {
