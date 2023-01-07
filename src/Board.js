@@ -40,8 +40,9 @@ class Board {
     gameLoop();
   }
 
+  // deal cards to all players
   deal(dealType) {
-    // deal cards to all players
+    // determine the deal type = hold, flop, turn or river
     switch (dealType) {
       case Types.dealTypes.Hole:
         this.players.forEach((player) => {
@@ -70,17 +71,21 @@ class Board {
     }
   }
 
-  // add players to the board - parameter is no of players to add. also adds the human player
   addPlayers(noPlayers) {
-    let pArray = [
-      Types.playerTypes.Player,
-      Types.playerTypes.AI1,
-      Types.playerTypes.AI2,
-      Types.playerTypes.AI3,
-    ];
-    for (let i = 0; i < noPlayers + 1; i++) {
-      let player = new Player({ playerType: pArray[i], board: this });
-      this.players.push(player);
+    // add players to the board - parameter is no of players to add. also adds the human player
+    let addedPlayers = 0;
+    for (let p in Types.playerTypes) {
+      if (Types.playerTypes[p].type === "ai" && addedPlayers < noPlayers) {
+        this.players.push(
+          new Player({ playerType: Types.playerTypes[p], board: this })
+        );
+        addedPlayers++;
+      }
+      if (Types.playerTypes[p].type === "player") {
+        this.players.push(
+          new Player({ playerType: Types.playerTypes[p], board: this })
+        );
+      }
     }
   }
 
@@ -103,7 +108,21 @@ class Board {
       case Types.dealTypes.River:
         this.deal(Types.dealTypes.River);
         break;
+      case "getresult":
+        this.getResult();
+        break;
     }
+  }
+
+  getResult() {
+    console.log("getresult");
+    this.players.forEach((player) => {
+      player.hand.forEach((card) => {
+        card.isFaceDown = false;
+      });
+      let combinedHand = [].concat(this.communityHand.hand, player.hand);
+      findBestHand(combinedHand, 5);
+    });
   }
 
   playSoundAsync(url) {
@@ -117,10 +136,12 @@ class Board {
 
     //draw card deck image
     this.deck.draw(ctx);
+
     // draw cards
     this.players.forEach((player) => {
       player.draw(ctx);
     });
+
     //draw community hand
     this.communityHand.draw(ctx);
   }

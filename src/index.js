@@ -34,5 +34,7 @@ function buttonClick(e) {
     case "river":
       board.onButtonClick({ action: Types.dealTypes.River });
       break;
+    case "getresult":
+      board.onButtonClick({ action: "getresult" });
   }
 }

@@ -4,7 +4,12 @@ class Types {
   //game status
   static gameStatuses = { Wait: 0, Deal: 1 };
 
-  static dealTypes = {Hole:"hole", Flop:"flop", Turn: "turn", River:"river"};
+  static dealTypes = {
+    Hole: "hole",
+    Flop: "flop",
+    Turn: "turn",
+    River: "river",
+  };
 
   // canvas size details used for setting up locations for players
   static canvasSize = { width: 3150, height: 1575, spacer: 20 };
@@ -16,6 +21,7 @@ class Types {
   static playerTypes = {
     AI1: {
       name: "Computer 1",
+      type: "ai",
       textPosition: {
         x: Types.canvasSize.width / 2,
         y: Types.canvasSize.height * 0.08,
@@ -36,6 +42,7 @@ class Types {
     },
     AI2: {
       name: "Computer 2",
+      type: "ai",
       textPosition: {
         x: Types.cardSize.width * 2 + Types.canvasSize.spacer,
         y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
@@ -56,6 +63,7 @@ class Types {
     },
     Community: {
       name: "Community Hand",
+      type: "community",
       textPosition: {
         x: Types.canvasSize.width / 2,
         y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
@@ -100,6 +108,7 @@ class Types {
     },
     AI3: {
       name: "Computer 3",
+      type: "ai",
       textPosition: {
         x: Types.canvasSize.width - 2 * Types.cardSize.width,
         y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
@@ -120,6 +129,7 @@ class Types {
     },
     Player: {
       name: "You",
+      type: "player",
       textPosition: {
         x: Types.canvasSize.width / 2,
         y: Types.canvasSize.height * 0.7,
@@ -140,6 +150,7 @@ class Types {
     },
     Deck: {
       name: "Deck",
+      type: "deck",
       textPosition: {
         x: Types.canvasSize.width / 2,
         y: Types.canvasSize.height * 0.7,
