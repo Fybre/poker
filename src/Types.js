@@ -22,9 +22,9 @@ class Types {
     AI1: {
       name: "Computer 1",
       type: "ai",
-      textPosition: {
+      centerPosition: {
         x: Types.canvasSize.width / 2,
-        y: Types.canvasSize.height * 0.08,
+        y: Types.canvasSize.height * 0.08 + Types.cardSize.height / 2,
       },
       positions: [
         {
@@ -43,9 +43,9 @@ class Types {
     AI2: {
       name: "Computer 2",
       type: "ai",
-      textPosition: {
-        x: Types.cardSize.width * 2 + Types.canvasSize.spacer,
-        y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
+      centerPosition: {
+        x: Types.cardSize.width * 2 + Types.canvasSize.spacer / 2,
+        y: Types.canvasSize.height * 0.5,
       },
       positions: [
         {
@@ -53,20 +53,62 @@ class Types {
           y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
         },
         {
+          x: Types.cardSize.width * 2 + Types.canvasSize.spacer,
+          y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
+        },
+      ],
+    },
+    AI3: {
+      name: "Computer 3",
+      type: "ai",
+      centerPosition: {
+        x:
+          Types.canvasSize.width -
+          Types.cardSize.width * 2 -
+          Types.canvasSize.spacer / 2,
+        y: Types.canvasSize.height / 2,
+      },
+      positions: [
+        {
           x:
-            Types.cardSize.width +
-            Types.cardSize.width +
+            Types.canvasSize.width -
+            3 * Types.cardSize.width -
             Types.canvasSize.spacer,
           y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
+        },
+        {
+          x: Types.canvasSize.width - 2 * Types.cardSize.width,
+          y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
+        },
+      ],
+    },
+    Player: {
+      name: "You",
+      type: "player",
+      centerPosition: {
+        x: Types.canvasSize.width / 2,
+        y: Types.canvasSize.height * 0.7 + Types.cardSize.height / 2,
+      },
+      positions: [
+        {
+          x:
+            Types.canvasSize.width / 2 -
+            Types.cardSize.width -
+            Types.canvasSize.spacer / 2,
+          y: Types.canvasSize.height * 0.7,
+        },
+        {
+          x: Types.canvasSize.width / 2 + Types.canvasSize.spacer / 2,
+          y: Types.canvasSize.height * 0.7,
         },
       ],
     },
     Community: {
       name: "Community Hand",
       type: "community",
-      textPosition: {
+      centerPosition: {
         x: Types.canvasSize.width / 2,
-        y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
+        y: Types.canvasSize.height / 2,
       },
       positions: [
         {
@@ -106,55 +148,10 @@ class Types {
         },
       ],
     },
-    AI3: {
-      name: "Computer 3",
-      type: "ai",
-      textPosition: {
-        x: Types.canvasSize.width - 2 * Types.cardSize.width,
-        y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
-      },
-      positions: [
-        {
-          x:
-            Types.canvasSize.width -
-            3 * Types.cardSize.width -
-            Types.canvasSize.spacer,
-          y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
-        },
-        {
-          x: Types.canvasSize.width - 2 * Types.cardSize.width,
-          y: Types.canvasSize.height * 0.5 - Types.cardSize.height / 2,
-        },
-      ],
-    },
-    Player: {
-      name: "You",
-      type: "player",
-      textPosition: {
-        x: Types.canvasSize.width / 2,
-        y: Types.canvasSize.height * 0.7,
-      },
-      positions: [
-        {
-          x:
-            Types.canvasSize.width / 2 -
-            Types.cardSize.width -
-            Types.canvasSize.spacer / 2,
-          y: Types.canvasSize.height * 0.7,
-        },
-        {
-          x: Types.canvasSize.width / 2 + Types.canvasSize.spacer / 2,
-          y: Types.canvasSize.height * 0.7,
-        },
-      ],
-    },
     Deck: {
       name: "Deck",
       type: "deck",
-      textPosition: {
-        x: Types.canvasSize.width / 2,
-        y: Types.canvasSize.height * 0.7,
-      },
+      centerPosition: { x: 0, y: 0 },
       positions: [
         {
           x: Types.canvasSize.width * 0.015,

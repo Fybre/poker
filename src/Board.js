@@ -6,16 +6,29 @@ class Board {
 
   // Initialise the deck for a new game
   init() {
+    this.startGameLoop();
+  }
+
+  // start a new game
+  startNewGame(noPlayers) {
     this.players = [];
+    this.addPlayers(noPlayers);
     this.communityHand = new Player({
       playerType: Types.playerTypes.Community,
       board: this,
     });
-    this.deck = new Deck({ board: this });
-    this.gamestatus = Types.gameStatuses.Wait;
-    this.startGameLoop();
   }
 
+  // start a new hand
+  startNewHand() {
+    this.deck = new Deck({ board: this });
+    this.communityHand.clearHand();
+    this.players.forEach((player) => {
+      player.clearHand();
+    });
+  }
+
+  // start the game loop
   startGameLoop() {
     const gameLoop = () => {
       //game loop - this runs continually
@@ -62,7 +75,6 @@ class Board {
         );
         break;
       case Types.dealTypes.Turn:
-        console.log("turn");
         this.communityHand.addCard(this.deck.deal(), false);
         break;
       case Types.dealTypes.River:
@@ -71,9 +83,10 @@ class Board {
     }
   }
 
+  // add players to the board - parameter is no of players to add. also adds the human player
   addPlayers(noPlayers) {
-    // add players to the board - parameter is no of players to add. also adds the human player
     let addedPlayers = 0;
+    // iterate through all player types, find the ones that are either ai or player and add them
     for (let p in Types.playerTypes) {
       if (Types.playerTypes[p].type === "ai" && addedPlayers < noPlayers) {
         this.players.push(
@@ -81,6 +94,7 @@ class Board {
         );
         addedPlayers++;
       }
+      // add human player
       if (Types.playerTypes[p].type === "player") {
         this.players.push(
           new Player({ playerType: Types.playerTypes[p], board: this })
@@ -89,12 +103,13 @@ class Board {
     }
   }
 
-  onButtonClick(e) {
-    console.log(e);
+  handleEvents(e) {
     switch (e.action) {
-      case "start":
-        this.init();
-        this.addPlayers(e.noPlayers - 0); // - 0 coerces to number
+      case "newgame":
+        this.startNewGame(e.noPlayers - 0);
+      //fall through
+      case "newhand":
+        this.startNewHand();
         break;
       case Types.dealTypes.Hole:
         this.deal(Types.dealTypes.Hole);
@@ -115,7 +130,6 @@ class Board {
   }
 
   getResult() {
-    console.log("getresult");
     this.players.forEach((player) => {
       player.hand.forEach((card) => {
         card.isFaceDown = false;
@@ -135,14 +149,19 @@ class Board {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     //draw card deck image
-    this.deck.draw(ctx);
+    if (this.deck) {
+      this.deck.draw(this.ctx);
+    }
 
     // draw cards
-    this.players.forEach((player) => {
-      player.draw(ctx);
-    });
-
+    if (this.players) {
+      this.players.forEach((player) => {
+        player.draw(this.ctx);
+      });
+    }
     //draw community hand
-    this.communityHand.draw(ctx);
+    if (this.communityHand) {
+      this.communityHand.draw(this.ctx);
+    }
   }
 }

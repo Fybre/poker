@@ -6,6 +6,7 @@ class Player {
     this.position = config.position || { x: 0, y: 0 };
     this.board = config.board;
     this.handLocations = this.playerType.positions;
+    this.isCurrentPlayer = false;
   }
 
   update() {}
@@ -23,18 +24,45 @@ class Player {
     this.hand.push(card);
   }
 
+  clearHand() {
+    this.hand = [];
+  }
+
   draw(ctx) {
     this.update();
+
+    //draw current player marker
+    if (this.isCurrentPlayer) {
+      ctx.beginPath();
+      ctx.fillStyle = "#0D4D00";
+      ctx.strokeStyle = "#000";
+      ctx.arc(
+        this.playerType.centerPosition.x,
+        this.playerType.centerPosition.y,
+        Types.cardSize.height,
+        0,
+        2 * Math.PI,
+        false
+      );
+      ctx.fill();
+      ctx.lineWidth = 10;
+      ctx.stroke();
+    }
+
+    //draw text
     ctx.textAlign = "center";
     ctx.font = "40px Arial";
     ctx.textBaseline = "bottom";
+    ctx.fillStyle = "#FFF";
     ctx.fillText(
       this.playerType.name +
         (this.playerType === Types.playerTypes.Community
           ? ""
           : " - $" + this.playerMoney),
-      this.playerType.textPosition.x,
-      this.playerType.textPosition.y
+      this.playerType.centerPosition.x,
+      this.playerType.centerPosition.y -
+        Types.cardSize.height / 2 -
+        Types.canvasSize.spacer
     );
     this.hand.forEach((card) => {
       card.draw(ctx);

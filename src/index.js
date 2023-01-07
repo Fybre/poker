@@ -11,30 +11,32 @@ window.addEventListener("load", function () {
 
 function buttonClick(e) {
   switch (e) {
-    case "start":
+    case "newgame":
       let noPlayers = window.prompt("Enter No of Computer Players (1-3)");
       if (noPlayers != null) {
         if (noPlayers > 0 && noPlayers < 4) {
-          board.onButtonClick({ action: "start", noPlayers: noPlayers });
+          board.handleEvents({ action: "newgame", noPlayers: noPlayers });
         } else {
           window.alert("Please enter between 1-3 computer players");
         }
       }
       break;
+    case "newhand":
+      board.handleEvents({ action: "newhand" });
+      break;
     case "hole":
-      board.onButtonClick({ action: Types.dealTypes.Hole });
+      board.handleEvents({ action: Types.dealTypes.Hole });
       break;
     case "flop":
-      board.onButtonClick({ action: Types.dealTypes.Flop });
+      board.handleEvents({ action: Types.dealTypes.Flop });
       break;
     case "turn":
-      console.log("turn in index");
-      board.onButtonClick({ action: Types.dealTypes.Turn });
+      board.handleEvents({ action: Types.dealTypes.Turn });
       break;
     case "river":
-      board.onButtonClick({ action: Types.dealTypes.River });
+      board.handleEvents({ action: Types.dealTypes.River });
       break;
     case "getresult":
-      board.onButtonClick({ action: "getresult" });
+      board.handleEvents({ action: "getresult" });
   }
 }
