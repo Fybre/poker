@@ -37,6 +37,10 @@ class Card {
     this.boardPosition = { x: endPos.x, y: endPos.y };
   }
 
+  getCardValue() {
+    return Card.cardValues[this.value];
+  }
+
   update() {
     const hyp = 80;
     //move towards the boardposition
