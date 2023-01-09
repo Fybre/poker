@@ -2,6 +2,8 @@ class Board {
   constructor(config) {
     this.canvas = config.canvas;
     this.ctx = config.canvas.getContext("2d");
+    this.dealer = null;
+    this.currentPlayer = null;
   }
 
   // Initialise the deck for a new game
@@ -11,12 +13,14 @@ class Board {
 
   // start a new game
   startNewGame(noPlayers) {
+    this.dealer = null;
     this.players = [];
     this.addPlayers(noPlayers);
     this.communityHand = new Player({
       playerType: Types.playerTypes.Community,
       board: this,
     });
+    this.phase = Types.dealTypes.Hole;
   }
 
   // start a new hand
@@ -26,6 +30,16 @@ class Board {
     this.players.forEach((player) => {
       player.clearHand();
     });
+    this.setDealer();
+    this.currentPlayer = this.dealer;
+  }
+
+  setDealer() {
+    if (this.dealer != null) {
+      this.dealer = this.dealer + 1 < this.players.length ? this.dealer + 1 : 0;
+    } else {
+      this.dealer = Math.floor(Math.random() * this.players.length);
+    }
   }
 
   // start the game loop
@@ -156,11 +170,14 @@ class Board {
     }
 
     // draw cards
-
     if (this.players) {
-      for (const player of this.players) {
-        player.draw(this.ctx);
-      }
+      this.players.forEach((player, index) => {
+        player.draw(
+          this.ctx,
+          index == this.currentPlayer,
+          index == this.dealer
+        );
+      });
     }
 
     //draw community hand

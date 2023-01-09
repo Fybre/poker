@@ -44,14 +44,18 @@ class Player {
     ctx.stroke();
   }
 
-  draw(ctx) {
+  draw(ctx, isCurrentPlayer = false, isDealer = false) {
     this.update();
+
+    if (isCurrentPlayer) {
+      this.drawCurrentPlayerMarker(ctx);
+    }
 
     //draw text
     ctx.textAlign = "center";
     ctx.font = "40px Arial";
     ctx.textBaseline = "bottom";
-    ctx.fillStyle = "#FFF";
+    ctx.fillStyle = isDealer ? "#FF0" : "#FFF";
     ctx.fillText(
       this.playerType.name +
         (this.playerType === Types.playerTypes.Community
