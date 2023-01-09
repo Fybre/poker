@@ -6,7 +6,6 @@ class Player {
     this.position = config.position || { x: 0, y: 0 };
     this.board = config.board;
     this.handLocations = this.playerType.positions;
-    this.isCurrentPlayer = false;
   }
 
   update() {}
@@ -28,26 +27,25 @@ class Player {
     this.hand = [];
   }
 
+  drawCurrentPlayerMarker(ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = "#0D4D00";
+    ctx.strokeStyle = "#000";
+    ctx.arc(
+      this.playerType.centerPosition.x,
+      this.playerType.centerPosition.y,
+      Types.cardSize.height,
+      0,
+      2 * Math.PI,
+      false
+    );
+    ctx.fill();
+    ctx.lineWidth = 10;
+    ctx.stroke();
+  }
+
   draw(ctx) {
     this.update();
-
-    //draw current player marker
-    if (this.isCurrentPlayer) {
-      ctx.beginPath();
-      ctx.fillStyle = "#0D4D00";
-      ctx.strokeStyle = "#000";
-      ctx.arc(
-        this.playerType.centerPosition.x,
-        this.playerType.centerPosition.y,
-        Types.cardSize.height,
-        0,
-        2 * Math.PI,
-        false
-      );
-      ctx.fill();
-      ctx.lineWidth = 10;
-      ctx.stroke();
-    }
 
     //draw text
     ctx.textAlign = "center";

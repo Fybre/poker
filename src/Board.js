@@ -85,22 +85,17 @@ class Board {
 
   // add players to the board - parameter is no of players to add. also adds the human player
   addPlayers(noPlayers) {
-    let addedPlayers = 0;
-    // iterate through all player types, find the ones that are either ai or player and add them
-    for (let p in Types.playerTypes) {
-      if (Types.playerTypes[p].type === "ai" && addedPlayers < noPlayers) {
-        this.players.push(
-          new Player({ playerType: Types.playerTypes[p], board: this })
-        );
-        addedPlayers++;
-      }
-      // add human player
-      if (Types.playerTypes[p].type === "player") {
-        this.players.push(
-          new Player({ playerType: Types.playerTypes[p], board: this })
-        );
-      }
+    for (let i = 1; i <= noPlayers; i++) {
+      this.players.push(
+        new Player({
+          playerType: Types.playerTypes["AI" + i],
+          board: this,
+        })
+      );
     }
+    this.players.push(
+      new Player({ playerType: Types.playerTypes.Player, board: this })
+    );
   }
 
   handleEvents(e) {
@@ -130,13 +125,20 @@ class Board {
   }
 
   getResult() {
-    this.players.forEach((player) => {
-      player.hand.forEach((card) => {
+    for (const player of this.players) {
+      for (const card of player.hand) {
         card.isFaceDown = false;
-      });
-      let combinedHand = [].concat(this.communityHand.hand, player.hand);
+      }
+      const combinedHand = [].concat(this.communityHand.hand, player.hand);
       findBestHand(combinedHand, 5);
-    });
+    }
+    // this.players.forEach((player) => {
+    //   player.hand.forEach((card) => {
+    //     card.isFaceDown = false;
+    //   });
+    //   let combinedHand = [].concat(this.communityHand.hand, player.hand);
+    //   findBestHand(combinedHand, 5);
+    // });
   }
 
   playSoundAsync(url) {
@@ -154,11 +156,13 @@ class Board {
     }
 
     // draw cards
+
     if (this.players) {
-      this.players.forEach((player) => {
+      for (const player of this.players) {
         player.draw(this.ctx);
-      });
+      }
     }
+
     //draw community hand
     if (this.communityHand) {
       this.communityHand.draw(this.ctx);

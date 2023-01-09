@@ -1,13 +1,54 @@
+class handResult {
+  static result = {
+    RoyalFlush: {
+      name: "Royal Flush",
+      score: 10,
+    },
+    StraightFlush: {
+      name: "Straight Flush",
+      score: 9,
+    },
+    FourOfAKind: {
+      name: "Four of a Kind",
+      score: 8,
+    },
+    FullHouse: {
+      name: "Full House",
+      score: 7,
+    },
+    Flush: {
+      name: "Flush",
+      score: 6,
+    },
+    Straight: {
+      name: "Straight",
+      score: 5,
+    },
+    ThreeOfAKind: {
+      name: "Three of a Kind",
+      score: 4,
+    },
+    TwoPair: {
+      name: "Two Pair",
+      score: 3,
+    },
+    OnePair: {
+      name: "One Pair",
+      score: 2,
+    },
+    HighCard: {
+      name: "High Card",
+      score: 1,
+    },
+  };
+
+  constructor() {}
+}
+
 function findBestHand(hand, handSize) {
   const combinations = getCombinations(hand, handSize);
   const sorted = [];
   combinations.forEach((hand) => sorted.push(sortHand(hand)));
-
-  sorted.forEach((hand) => {
-    if (isAllSameSuite(hand)) {
-      console.log("FLUSH!");
-    }
-  });
 }
 
 function scoreHand(hand) {}
@@ -33,6 +74,48 @@ function isRoyalFlush(sortedHand) {
     return true;
   }
   return false;
+}
+
+function isStraightFlush(sortedHand) {
+  return isAllSameSuite(sortedHand) && isStraight(sortedHand);
+}
+
+function isFourOfAKind(sortedHand) {}
+
+function isFullHouse(sortedHand) {}
+
+function isFlush(sortedhand) {
+  return isAllSameSuite(sortedHand);
+}
+
+function isStraight(sortedHand) {}
+
+function isThreeOfAKind(sortedHand) {}
+
+function isTwoPair(sortedHand) {}
+
+function isOnePair(sortedhand) {}
+
+function getHighestCard(sortedhand) {
+  return sortedhand[sortedHand.length - 1];
+}
+
+
+
+function GetGroupedCardValues(hand)
+{
+  valueObject = {};
+  for(let card of hand)
+  {
+    if (valueObject[card.getCardValue()]){
+      valueObject[card.getCardValue()++];
+    }
+    else
+    {
+      valueObject[card.getCardValue()] = 1;
+    }
+  }
+  return valueObject;
 }
 
 function isAllSameSuite(hand) {

@@ -60,26 +60,4 @@ class CardSprite {
         this.getCardHeight()
       );
   }
-
-  // getCard(cardSuite, cardValue) {
-  //   let dCanvas = document.createElement("canvas");
-  //   let dctx = dCanvas.getContext("2d");
-  //   if (this.imageLoaded) {
-  //     dCanvas.width = this.getCardWidth();
-  //     dCanvas.height = this.getCardHeight();
-
-  //     dctx.drawImage(
-  //       this.cardImage,
-  //       (cardValue - 1) * dCanvas.width,
-  //       cardSuite * dCanvas.height,
-  //       dCanvas.width,
-  //       dCanvas.height,
-  //       0,
-  //       0,
-  //       dCanvas.width,
-  //       dCanvas.height
-  //     );
-  //     return dCanvas;
-  //   }
-  // }
 }

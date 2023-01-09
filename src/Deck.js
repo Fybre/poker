@@ -29,9 +29,9 @@ class Deck {
 
   shuffle() {
     for (let i = 0; i < this.deck.length; i++) {
-      let j = Math.floor(Math.random() * this.deck.length);
-      let temp = this.deck[i];
-      this.deck[i] = this.deck[j];
+      let j = Math.floor(Math.random() * this.deck.length); // get a random number
+      let temp = this.deck[i]; // get the value of the current card in the loop
+      this.deck[i] = this.deck[j]; // swap it with the random card we chose
       this.deck[j] = temp;
     }
   }
