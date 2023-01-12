@@ -4,20 +4,14 @@ class CardSprite {
   static XFrames = 14;
   static YFrames = 4;
   static FaceDownLocation = { x: 13, y: 0 };
-  static shadowOffset = 10;
 
   constructor() {
     this.cardImage = new Image();
     this.cardImage.onload = () => {
       this.imageLoaded = true;
     };
-    this.shadowImage = new Image();
-    this.shadowImage.onload = () => {
-      this.shadowImageLoaded = true;
-    };
 
     this.cardImage.src = "./img/cards.png";
-    this.shadowImage.src = "./img/cardshadow.png";
   }
 
   getCardWidth() {
@@ -29,20 +23,12 @@ class CardSprite {
   }
 
   drawCard({ ctx: ctx, card: card }) {
-    //draw shadow
-    this.shadowImageLoaded &&
-      ctx.drawImage(
-        this.shadowImage,
-        0,
-        0,
-        this.getCardWidth(),
-        this.getCardHeight(),
-        card.position.x + CardSprite.shadowOffset,
-        card.position.y + CardSprite.shadowOffset,
-        this.getCardWidth(),
-        this.getCardHeight()
-      );
-
+    ctx.save();
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 10;
+    ctx.shadowOffsetY = 10;
+    ctx.shadowColor = "black";
+    ctx.globalAlpha = 0.4;
     this.imageLoaded &&
       ctx.drawImage(
         this.cardImage,
@@ -59,5 +45,6 @@ class CardSprite {
         this.getCardWidth(),
         this.getCardHeight()
       );
+    ctx.restore();
   }
 }

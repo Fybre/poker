@@ -6,6 +6,27 @@ class Player {
     this.position = config.position || { x: 0, y: 0 };
     this.board = config.board;
     this.handLocations = this.playerType.positions;
+    this.playerLabel = new TextLabel({
+      text: this.playerType.name,
+      position: {
+        x: this.playerType.centerPosition.x,
+        y:
+          this.playerType.centerPosition.y -
+          Types.cardSize.height / 2 -
+          Types.canvasSize.spacer,
+      },
+      animation: { type: TextLabel.animationType.grow, textSize: 0 },
+    });
+    this.statusLabel = new TextLabel({
+      text: "",
+      position: {
+        x: this.playerType.centerPosition.x,
+        y: this.playerType.centerPosition.y,
+      },
+      fontSize: 60,
+      colour: "#F00",
+    });
+    this.playerStatus = config.status || Types.playerStatus.inPlay;
   }
 
   update() {}
@@ -28,6 +49,7 @@ class Player {
   }
 
   drawCurrentPlayerMarker(ctx) {
+    ctx.save();
     ctx.beginPath();
     ctx.fillStyle = "#0D4D00";
     ctx.strokeStyle = "#000";
@@ -42,6 +64,7 @@ class Player {
     ctx.fill();
     ctx.lineWidth = 10;
     ctx.stroke();
+    ctx.restore();
   }
 
   draw(ctx, isCurrentPlayer = false, isDealer = false) {
@@ -51,21 +74,18 @@ class Player {
       this.drawCurrentPlayerMarker(ctx);
     }
 
-    //draw text
-    ctx.textAlign = "center";
-    ctx.font = "40px Arial";
-    ctx.textBaseline = "bottom";
-    ctx.fillStyle = isDealer ? "#FF0" : "#FFF";
-    ctx.fillText(
+    //draw label
+    this.playerLabel.text =
       this.playerType.name +
-        (this.playerType === Types.playerTypes.Community
-          ? ""
-          : " - $" + this.playerMoney),
-      this.playerType.centerPosition.x,
-      this.playerType.centerPosition.y -
-        Types.cardSize.height / 2 -
-        Types.canvasSize.spacer
-    );
+      (this.playerType === Types.playerTypes.Community
+        ? ""
+        : " - $" + this.playerMoney);
+    this.playerLabel.textColour = isDealer ? "#FF0" : "#FFF";
+    this.playerLabel.draw(ctx);
+
+    this.statusLabel.text = this.playerStatus;
+    this.statusLabel.draw(ctx);
+
     this.hand.forEach((card) => {
       card.draw(ctx);
     });

@@ -43,7 +43,13 @@ class Deck {
   }
 
   draw(ctx) {
+    ctx.save();
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 10;
+    ctx.shadowOffsetY = 10;
+    ctx.shadowColor = "black";
     this.imageLoaded &&
       ctx.drawImage(this.image, this.position.x, this.position.y);
+    ctx.restore();
   }
 }

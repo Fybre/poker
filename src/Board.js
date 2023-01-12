@@ -4,6 +4,9 @@ class Board {
     this.ctx = config.canvas.getContext("2d");
     this.dealer = null;
     this.currentPlayer = null;
+    this.rAF = 0;
+    this.animations = [];
+    this.gameStatus = Types.gameStatus.None;
   }
 
   // Initialise the deck for a new game
@@ -20,7 +23,7 @@ class Board {
       playerType: Types.playerTypes.Community,
       board: this,
     });
-    this.phase = Types.dealTypes.Hole;
+    this.gameStatus = Types.gameStatus.PreHole;
   }
 
   // start a new hand
@@ -40,31 +43,6 @@ class Board {
     } else {
       this.dealer = Math.floor(Math.random() * this.players.length);
     }
-  }
-
-  // start the game loop
-  startGameLoop() {
-    const gameLoop = () => {
-      //game loop - this runs continually
-
-      // NOT COMPLETED - determines the current game status and processes accordingly
-      switch (this.gamestatus) {
-        case Types.gameStatuses.Deal:
-          // initial deal
-          this.gamestatus = Types.gameStatuses.Wait;
-          break;
-      }
-
-      // redraw the board
-      this.draw();
-      // run the game loop routine over again
-      window.requestAnimationFrame(() => {
-        gameLoop();
-      });
-    };
-
-    // initial call to gameloop
-    gameLoop();
   }
 
   // deal cards to all players
@@ -144,15 +122,9 @@ class Board {
         card.isFaceDown = false;
       }
       const combinedHand = [].concat(this.communityHand.hand, player.hand);
+      console.log("player " + player.playerType.name);
       findBestHand(combinedHand, 5);
     }
-    // this.players.forEach((player) => {
-    //   player.hand.forEach((card) => {
-    //     card.isFaceDown = false;
-    //   });
-    //   let combinedHand = [].concat(this.communityHand.hand, player.hand);
-    //   findBestHand(combinedHand, 5);
-    // });
   }
 
   playSoundAsync(url) {
@@ -184,5 +156,45 @@ class Board {
     if (this.communityHand) {
       this.communityHand.draw(this.ctx);
     }
+
+    // draw animations
+    this.animations = this.animations.filter((a) => !a.isComplete);
+    for (let a of this.animations) {
+      a.draw();
+    }
+  }
+
+  // start the game loop
+  startGameLoop() {
+    let start = performance.now(); // the start time
+    let self = this; // store the 'this' context outside of the gameloop so we don't need to constantly rebind it
+
+    function gameLoop(timeStamp) {
+      let delta = timeStamp - start;
+
+      switch (self.gameStatus) {
+        case Types.gameStatus.PreHole:
+          // do big blind
+          // do small blind
+          self.gameStatus = Types.gameStatus.Hole;
+          break;
+        case Types.gameStatus.Hole:
+          // do player actions
+          break;
+        case Types.gameStatus.Flop:
+          break;
+        case Types.gameStatus.Turn:
+          break;
+        case Types.gameStatus.River:
+          break;
+        case Types.gameStatus.Finale:
+          break;
+      }
+
+      self.draw(delta);
+      requestAnimationFrame(gameLoop);
+    }
+
+    requestAnimationFrame(gameLoop);
   }
 }

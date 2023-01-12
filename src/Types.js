@@ -2,13 +2,29 @@
 
 class Types {
   //game status
-  static gameStatuses = { Wait: 0, Deal: 1 };
+
+  static gameStatus = {
+    None: "None",
+    PreHole: "Pre-hole",
+    Hole: "Hole",
+    Flop: "Flop",
+    Turn: "Turn",
+    River: "River",
+    Finale: "Finale",
+  };
 
   static dealTypes = {
-    Hole: "hole",
-    Flop: "flop",
-    Turn: "turn",
-    River: "river",
+    Hole: "Hole",
+    Flop: "Flop",
+    Turn: "Turn",
+    River: "River",
+  };
+
+  static playerStatus = {
+    inPlay: "",
+    fold: "Folded",
+    broke: "Broke",
+    winner: "Winner",
   };
 
   // canvas size details used for setting up locations for players

@@ -47,8 +47,21 @@ class handResult {
 
 function findBestHand(hand, handSize) {
   const combinations = getCombinations(hand, handSize);
-  const sorted = [];
-  combinations.forEach((hand) => sorted.push(sortHand(hand)));
+  const sortedHandCombinations = [];
+  combinations.forEach((hand) => sortedHandCombinations.push(sortHand(hand)));
+
+  for (const hand of sortedHandCombinations) {
+    //console.log("royal flush", isRoyalFlush(hand));
+    //console.log("straight flush", isStraightFlush(hand));
+    //isFourOfAKind(sortedHand);
+    //isFullHouse(sortedHand);
+    //console.log("flush", isFlush(hand));
+    //isStraight(sortedHand);
+    //isThreeOfAKind(sortedHand);
+    isTwoPair(hand);
+    //isOnePair(sortedhand);
+    //console.log("Highest card", getHighestCard(hand));
+  }
 }
 
 function scoreHand(hand) {}
@@ -85,33 +98,31 @@ function isFourOfAKind(sortedHand) {}
 function isFullHouse(sortedHand) {}
 
 function isFlush(sortedhand) {
-  return isAllSameSuite(sortedHand);
+  return isAllSameSuite(sortedhand);
 }
 
 function isStraight(sortedHand) {}
 
 function isThreeOfAKind(sortedHand) {}
 
-function isTwoPair(sortedHand) {}
+function isTwoPair(sortedHand) {
+  const groupedHandValues = GetGroupedCardValues(sortedHand);
+  valuesArray = Object.values(groupedHandValues);
+  console.log(valuesArray);
+}
 
 function isOnePair(sortedhand) {}
 
 function getHighestCard(sortedhand) {
-  return sortedhand[sortedHand.length - 1];
+  return sortedhand[sortedhand.length - 1].getCardValue();
 }
 
-
-
-function GetGroupedCardValues(hand)
-{
+function GetGroupedCardValues(hand) {
   valueObject = {};
-  for(let card of hand)
-  {
-    if (valueObject[card.getCardValue()]){
-      valueObject[card.getCardValue()++];
-    }
-    else
-    {
+  for (let card of hand) {
+    if (valueObject[card.getCardValue()]) {
+      valueObject[card.getCardValue()]++;
+    } else {
       valueObject[card.getCardValue()] = 1;
     }
   }
